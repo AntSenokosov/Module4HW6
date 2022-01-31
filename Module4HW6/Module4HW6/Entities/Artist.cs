@@ -8,4 +8,6 @@ public class Artist
     public string? Phone { get; set; }
     public string? Email { get; set; }
     public string? InstagramUrl { get; set; }
+
+    public List<Song> Songs { get; set; } = new List<Song>();
 }
