@@ -14,19 +14,31 @@ public class InitializationDb
 
     public async Task Init()
     {
-        if (!(await _db.Genres.AnyAsync()))
+        await using (var transaction = await _db.Database.BeginTransactionAsync())
         {
-            await InitGenre();
-        }
+            try
+            {
+                if (!(await _db.Genres.AnyAsync()))
+                {
+                    await InitGenre();
+                }
 
-        if (!(await _db.Songs.AnyAsync()))
-        {
-            await InitSong();
-        }
+                if (!(await _db.Songs.AnyAsync()))
+                {
+                    await InitSong();
+                }
 
-        if (!(await _db.Artists.AnyAsync()))
-        {
-            await InitArtist();
+                if (!(await _db.Artists.AnyAsync()))
+                {
+                    await InitArtist();
+                }
+
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+            }
         }
     }
 
