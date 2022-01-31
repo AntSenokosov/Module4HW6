@@ -11,7 +11,7 @@ public class ArtistConfiguration : IEntityTypeConfiguration<Artist>
         builder.ToTable("Artist").HasKey(a => a.Id);
         builder.Property(a => a.Id).HasColumnName("ArtistId").ValueGeneratedOnAdd();
         builder.Property(a => a.Name).IsRequired().HasMaxLength(255);
-        builder.Property(a => a.DateOfBirth).IsRequired().HasMaxLength(7);
+        builder.Property(a => a.DateOfBirth).IsRequired();
         builder.Property(a => a.Phone).HasMaxLength(20);
         builder.Property(a => a.Email).HasMaxLength(50);
         builder.Property(a => a.InstagramUrl).HasMaxLength(255);
